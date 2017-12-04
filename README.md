@@ -10,9 +10,13 @@ Constraint: a < b
 ```
 
 ## Encrypt
-`((a * x) + b) mod k`
+* `((a * x) + b) mod k`
+* `decode a b text`
 
 ## Decrypt
-`((a^-1 * (y - b) mod k`
+* `((a^-1 * (y - b) mod k`
+* `encode a b text`
 
 ## Crack
+* generate blind text with [BLINDTEXTGENERATOR](http://www.blindtextgenerator.com)
+* `crack text_to_crack blind_text`

@@ -1,5 +1,6 @@
 import Data.Char
 import Data.Maybe
+import Data.List
 
 let2int :: Char -> Int
 let2int c = ord c - ord 'a'
@@ -34,3 +35,43 @@ shift_back c a b | not (valid_param a) = Nothing
 decode :: Int -> Int -> String -> Maybe String
 decode a b xs | not (valid_param a) = Nothing
               | otherwise = Just (map fromJust [shift_back x a b | x <- xs])
+
+-- CRACK
+
+quadgram :: [Char] -> [[Char]]
+quadgram s = [take 4 (drop (i*1) str) | i <- [0..l]]
+             where str = map toLower (filter isLetter s)
+                   l = length str - 4
+
+count :: Eq a => a -> [a] -> Int
+count x = length . filter (==x)
+
+rmdups :: Eq a => [a] -> [a]
+rmdups [] = []
+rmdups (x:xs) = x : filter (/= x) (rmdups xs)
+
+freq :: Eq a => [a] -> [(a, Int)]
+freq vs = [(v, count v vs) | v <- rmdups vs]
+
+divFloat :: Int -> Int -> Float
+divFloat a b = (fromIntegral a) / (fromIntegral b)
+
+prob :: [(a, Int)] -> [(a, Float)]
+prob vs = [(a, divFloat f l) | (a, f) <- vs]
+          where l = sum [f | (_, f) <- vs]
+
+ln :: (Floating a, Eq a) => a -> a
+ln 0 = fromIntegral 0
+ln a = log a
+
+fitness :: String -> String -> Float
+fitness s refText = sum [ln (fromMaybe 0 (lookup qd probabilities)) | qd <- quadgram s]
+            where probabilities = prob(freq (quadgram refText))
+
+crack :: String -> String -> String
+crack s refText = fromJust (decode a b s)
+                  where a = fst result
+                        b = snd result
+                        result = snd (ordered_fits !! 0)
+                        ordered_fits = sort [(f, p) | (f, p) <- fits, f /= 0.0]
+                        fits = [((fitness (fromJust (decode a b s)) refText), (a, b)) | a <- [1,3,5,7,9,11,15,17,19,21,23,25], b <- [0..25]]
