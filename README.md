@@ -17,6 +17,6 @@ Constraint: a < b
 * `((a^-1 * (y - b) mod k`
 * `encode a b text`
 
-## Crack
+## Crack
 * generate blind text with [BLINDTEXTGENERATOR](http://www.blindtextgenerator.com)
 * `crack text_to_crack blind_text`
