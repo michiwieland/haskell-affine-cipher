@@ -81,4 +81,5 @@ crack s refText = fromJust (decode a b s)
                         b = snd result
                         result = snd (ordered_fits !! 0)
                         ordered_fits = sort [(f, p) | (f, p) <- fits, f /= 0.0]
-                        fits = [((fitness (fromJust (decode a b s)) refText), (a, b)) | a <- [1,3,5,7,9,11,15,17,19,21,23,25], b <- [0..25]]
+                        fits = [((fitness (fromJust (decode a b s)) refText), (a, b)) | a <- valid_as, b <- [0..25]]
+                        valid_as = [a | a <- [1..25], valid_param a]
