@@ -22,11 +22,11 @@ Alphabet size / modulo: m
 
 ## Encrypt
 * `((a * x) + b) mod m`
-* `decode a b 'text'`
+* `decode a b "text"`
 
 ## Decrypt
 * `((a^-1 * (y - b) mod m`
-* `encode a b 'text'`
+* `encode a b "text"`
 
 ## How to crack
 This code uses quadgram statistics to crack an encrypted text. 
@@ -39,4 +39,4 @@ This code uses quadgram statistics to crack an encrypted text.
 
 ### Usage
 * generate blind text with [BLINDTEXTGENERATOR](http://www.blindtextgenerator.com)
-* `crack 'text_to_crack' 'blind_text'`
+* `crack "text_to_crack" "blind_text"`
