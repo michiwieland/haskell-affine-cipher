@@ -25,7 +25,7 @@ Alphabet size / modulo: m
 * `decode a b "text"`
 
 ## Decrypt
-* `((a^-1 * (y - b) mod m`
+* `((a^-1) * (y - b)) mod m`
 * `encode a b "text"`
 
 ## How to crack
