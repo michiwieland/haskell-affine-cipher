@@ -1,6 +1,7 @@
 import Data.Char
 import Data.Maybe
 import Data.List
+import qualified Data.Set as Set
 
 let2int :: Char -> Int
 let2int c | isLower c = ord c - ord 'a'
@@ -51,11 +52,16 @@ quadgram s = [take 4 (drop (i*1) str) | i <- [0..l]]
 count :: Eq a => a -> [a] -> Int
 count x = length . filter (==x)
 
-rmdups :: Eq a => [a] -> [a]
-rmdups [] = []
-rmdups (x:xs) = x : filter (/= x) (rmdups xs)
 
-freq :: Eq a => [a] -> [(a, Int)]
+-- slower
+-- rmdups :: Eq a => [a] -> [a]
+-- rmdups [] = []
+-- rmdups (x:xs) = x : filter (/= x) (rmdups xs)
+
+rmdups :: Ord a => [a] -> [a]
+rmdups xs = Set.toList (Set.fromList xs)
+
+freq :: Ord a => [a] -> [(a, Int)]
 freq vs = [(v, count v vs) | v <- rmdups vs]
 
 divFloat :: Int -> Int -> Float
