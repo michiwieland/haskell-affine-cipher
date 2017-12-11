@@ -3,7 +3,8 @@ import Data.Maybe
 import Data.List
 
 let2int :: Char -> Int
-let2int c = ord c - ord 'a'
+let2int c | isLower c = ord c - ord 'a'
+          | otherwise = let2int (toLower c)
 
 int2let :: Int -> Char
 int2let n = chr (ord 'a' + n)
